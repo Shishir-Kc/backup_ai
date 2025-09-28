@@ -2,16 +2,26 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from groq import Groq
 from dotenv import load_dotenv
+from fastapi.middleware.cors import CORSMiddleware
 import os 
 
 load_dotenv()
+app = FastAPI()
+
 client = Groq(api_key=os.getenv("API_KEY"))
 
 class Chat(BaseModel):
   message:str
 
 
-app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Anyone can access
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
 
 @app.post('/chat/')
 def chat(data:Chat):
