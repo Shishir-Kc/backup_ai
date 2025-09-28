@@ -8,7 +8,7 @@ load_dotenv()
 client = Groq(api_key=os.getenv("API_KEY"))
 
 class Chat(BaseModel):
-    prompt:str
+  message:str
 
 
 app = FastAPI()
@@ -28,7 +28,7 @@ def chat(data:Chat):
       {
          
         "role": "user",
-        "content": data.prompt
+        "content": data.message
       }
     ],
     temperature=1,
